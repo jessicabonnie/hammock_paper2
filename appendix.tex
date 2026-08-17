@@ -1,0 +1,132 @@
+\documentclass[11pt]{article}
+\usepackage{hyperref}
+\usepackage[letterpaper, margin=1.2in]{geometry}
+% \geometry{letterpaper}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{epstopdf}
+\usepackage{bbm}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{xspace}
+\usepackage{longtable}
+\usepackage{verbatim}
+\usepackage{authblk}
+\usepackage{textcomp}
+\RequirePackage{palatino}
+
+% packages that I imported
+\usepackage{etoolbox}
+\usepackage{xr}
+\usepackage{caption}
+\usepackage{subcaption}
+\makeatletter
+\newcommand*{\addFileDependency}[1]{% argument=file name and extension
+  \typeout{(#1)}
+  \@addtofilelist{#1}
+  \IfFileExists{#1}{}{\typeout{No file #1.}}
+}
+\makeatother
+\newcommand*{\myexternaldocument}[1]{%
+    \externaldocument{#1}%
+    \addFileDependency{#1.tex}%
+    \addFileDependency{#1.aux}%
+}
+\externaldocument{main}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{multicol}
+\usepackage{mathtools}
+\usepackage{minibox}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{caption}
+\captionsetup{format=plain, font=small, labelfont=bf}
+\usepackage{capt-of}
+
+
+\newcounter{equationset}
+\newcommand{\equationset}[1]{% \equationset{<caption>}
+  \refstepcounter{equationset}% Step counter
+  \noindent\minibox[c]{Derivation~\theequationset: #1}}% Print caption
+
+\newcommand{\centered}[1]{\begin{tabular}{l} #1 \end{tabular}}
+
+% \usepackage{etoolbox} % for the trick
+
+% % setup algorithmic to use straight quotes
+% \AtBeginEnvironment{algorithmic}{\useupquotes}
+
+% % define the command that activates the quotes and redefines them
+% \newcommand{\useupquotes}{%
+%   \begingroup\lccode`\~=`\'\lowercase{\endgroup\let~}\algoupquote
+%   \begingroup\lccode`\~=`\"\lowercase{\endgroup\let~}\algoupquotes
+%   \catcode`\'=\active\catcode`\"=\active
+% }
+% % Customize here (\mbox is necessary because of math mode;
+% % if needed in subscripts, use \text instead)
+% \newcommand{\algoupquote}{\mbox{\textquotesingle}}
+% \newcommand{\algoupquotes}{\mbox{\char`\"}}
+
+\newtheorem{property}{Property}
+
+\newif\ifrevision
+\revisionfalse
+% \revisionfalse
+
+\newif\ifrevtwo
+% \revtwotrue
+\revtwofalse
+
+\newif\ifpreprint
+% \preprinttrue
+\preprintfalse
+
+\newif\ifshowsupp
+% \showsupptrue
+\showsuppfalse
+
+\ifrevision
+\newcommand{\ad}[1]{\textcolor{red}{#1}}
+\else
+\newcommand{\ad}[1]{\textcolor{black}{#1}}
+\fi
+
+\ifrevtwo
+\newcommand{\adtwo}[1]{\textcolor{red}{#1}}
+\else
+\newcommand{\adtwo}[1]{\textcolor{black}{#1}}
+\fi
+
+\ifpreprint
+% \usepackage[backend=biber,style=numeric,maxbibnames=10,minbibnames=10,sorting=none]{biblatex}
+\usepackage[backend=biber,style=nature,maxbibnames=10,minbibnames=10,sorting=none]{biblatex}
+\addbibresource{main.bib}
+\else
+%\usepackage{cite}
+\usepackage[round, sort, numbers]{natbib}
+\newcommand{\autocite}[1]{\cite{#1}}
+\fi
+
+\newcommand{\BTL}[1]{\textcolor{blue}{[\textbf{BTL: #1}]}}
+\newcommand{\KC}[1]{\textcolor{red}{[\textbf{KC: #1}]}}
+\newcommand{\PC}[1]{\textcolor{orange}{[\textbf{PC: #1}]}}
+% \renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\figurename}{Figure S\hspace{-3pt}}
+\renewcommand{\tablename}{Table S\hspace{-3pt}}
+
+\begin{document}
+
+\pagenumbering{gobble}
+
+
+%\section*{Figure S1: }
+\label{appendix:compression_metrics}
+
+\include{sup1}
+
+
+\end{document}
